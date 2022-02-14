@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="body1">13sp</dimen>
+    <dimen name="body2">11sp</dimen>
+    <dimen name="h1">21sp</dimen>
+    <dimen name="h2">17sp</dimen>
+    <dimen name="h0">28sp</dimen>
+    <dimen name="ten_dp">10dp</dimen>
+    <dimen name="twenty_five_dp">25dp</dimen>
+    <dimen name="fifty_dp">50dp</dimen>
+    <dimen name="five_dp">5dp</dimen>
+    <dimen name="fifteen_dp">15dp</dimen>
+    <dimen name="thirty_five_dp">35dp</dimen>
+    <dimen name="thirty_dp">30dp</dimen>
+    <dimen name="twenty_dp">20dp</dimen>
+    <dimen name="seventy_five_dp">75dp</dimen>
+</resources>

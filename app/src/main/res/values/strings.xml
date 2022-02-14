@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Moussafir Dima</string>
+    <string name="title_activity_transportation">TransportationActivity</string>
+    <string name="language">Language</string>
+    <string name="trips">Trips</string>
+    <string name="help_support">"Help &amp; Support"</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_splash">SplashActivity</string>
+</resources>

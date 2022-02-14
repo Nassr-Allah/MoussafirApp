@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <dimen name="body1">18.06sp</dimen>
+    <dimen name="body2">15.28sp</dimen>
+    <dimen name="h1">29.17sp</dimen>
+    <dimen name="h2">23.61sp</dimen>
+    <dimen name="h0">38.89sp</dimen>
+    <dimen name="ten_dp">13.89dp</dimen>
+    <dimen name="twenty_five_dp">34.72dp</dimen>
+    <dimen name="fifty_dp">69.44dp</dimen>
+    <dimen name="five_dp">6.94dp</dimen>
+    <dimen name="fifteen_dp">20.83dp</dimen>
+    <dimen name="thirty_five_dp">48.61dp</dimen>
+    <dimen name="thirty_dp">41.67dp</dimen>
+</resources>
