@@ -4,6 +4,7 @@ import android.util.Log
 import com.ems.moussafirdima.data.remote.DirectionsApi
 import com.ems.moussafirdima.data.remote.dto.directions_api.Direction
 import com.ems.moussafirdima.domain.model.MapRoute
+import com.ems.moussafirdima.domain.model.Trip
 import com.ems.moussafirdima.domain.repository.RouteRepository
 import com.ems.moussafirdima.util.Resource
 import com.ems.moussafirdima.util.getCurrentDay
@@ -22,12 +23,23 @@ class GetDirectionsUseCase @Inject constructor(
     private val repository: RouteRepository
 ) {
 
-    operator fun invoke(origin: String, direction: String, key: String, date: String): Flow<Resource<Direction>> = flow {
+    operator fun invoke(
+        origin: String,
+        direction: String,
+        key: String,
+        date: String,
+        trip: Trip,
+    ):
+            Flow<Resource<Direction>> = flow {
         Log.d("DirectionUseCase", "called")
         try {
+            val tripHourInSeconds = "${trip.time[0]}${trip.time[1]}".toInt() * 3600
+            val tripMinuteInSeconds = "${trip.time[3]}${trip.time[4]}".toInt() * 60
+            val departureTime = ((Calendar.getInstance(Locale.FRANCE).timeInMillis) / 60) +
+                    tripHourInSeconds + tripMinuteInSeconds
             Log.d("DirectionUseCase", "loading")
             emit(Resource.Loading<Direction>())
-            val result = api.getDirection(origin, direction, key)
+            val result = api.getDirection(origin, direction, departureTime, key)
             Log.d("DirectionUseCase", result.toString())
             val list = mutableListOf<LatLng>()
             for (route in result.routes) {
@@ -44,19 +56,21 @@ class GetDirectionsUseCase @Inject constructor(
             }
             val encodedPath = PolyUtil.encode(list)
             val duration = (result.routes[0].legs[0].duration.value) * 1000
-            val durationToArrival = Calendar.getInstance(TimeZone.getDefault()).timeInMillis + duration
-            val hour = "${(durationToArrival / (1000*60*60)) % 24}"
-            val minute = if ((durationToArrival / (1000*60)) % 60 >= 10) {
-                "${(durationToArrival / (1000*60)) % 60}"
+            val durationToArrival =
+                Calendar.getInstance(TimeZone.getDefault()).timeInMillis + duration
+            val hour = "${((durationToArrival / (1000 * 60 * 60)) % 24) + 1}"
+            val minute = if ((durationToArrival / (1000 * 60)) % 60 >= 10) {
+                "${(durationToArrival / (1000 * 60)) % 60}"
             } else {
-                "0${(durationToArrival / (1000*60)) % 60}"
+                "0${(durationToArrival / (1000 * 60)) % 60}"
             }
             val arrival = "$hour:$minute"
             val mapRoute = MapRoute(
                 encodedPath = encodedPath,
                 duration = durationToArrival,
                 arrival = arrival,
-                date = date
+                date = date,
+                tripId = trip.id
             )
             Log.d("DirectionUseCase", mapRoute.toString())
             repository.insertRoute(mapRoute)

@@ -43,6 +43,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 private val marker = MarkerOptions()
 var arrivalTime = ""
@@ -57,12 +58,8 @@ fun MapScreen(
     locationUpdateRequest: LocationUpdateRequest =
         LocationUpdateRequest(LocalContext.current.applicationContext),
     stationsViewModel: StationsListViewModel = hiltViewModel(),
-    directionsViewModel: DirectionsViewModel = hiltViewModel(),
     context: Context = LocalContext.current.applicationContext
 ) {
-    var visible by remember {
-        mutableStateOf(false)
-    }
     val permissionState = rememberMultiplePermissionsState(
         permissions = listOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -99,14 +96,19 @@ fun MapHeader(onItemClick: () -> Unit, directionsViewModel: DirectionsViewModel 
     var duration by remember {
         mutableStateOf("")
     }
+    var day by remember {
+        mutableStateOf("")
+    }
     var alpha by remember {
         mutableStateOf(0f)
     }
+    val date = "${getCurrentDay()}/${getCurrentMonth()}/${Calendar.getInstance().get(Calendar.YEAR)}"
     val mapRoute = directionsViewModel.mapRoute.value
     val context = LocalContext.current.applicationContext
     LaunchedEffect(key1 = mapRoute) {
         if (mapRoute.arrival.isNotEmpty()) {
             duration = mapRoute.arrival
+            day = if (mapRoute.date == date) "today at " else "tomorrow at "
             alpha = 1f
             delay(1000)
             drawPath(GlobalVars.map!!, mapRoute.encodedPath, context)
@@ -159,8 +161,9 @@ fun MapHeader(onItemClick: () -> Unit, directionsViewModel: DirectionsViewModel 
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (duration.isNotEmpty()) {
+                    Log.d("MapScreen","$date and route date is ${mapRoute.date}")
                     Text(
-                        text = "Arrival: $duration",
+                        text = "Arrival: $day $duration",
                         style = MaterialTheme.typography.body1,
                         fontSize = dimensionResource(R.dimen.body1).value.sp,
                         color = Color.White,

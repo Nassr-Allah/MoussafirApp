@@ -7,7 +7,7 @@ import com.ems.moussafirdima.domain.model.RoomTicket
 import com.ems.moussafirdima.domain.model.Ticket
 import com.ems.moussafirdima.domain.model.User
 
-@Database(entities = [User::class, RoomTicket::class, MapRoute::class], version = 9)
+@Database(entities = [User::class, RoomTicket::class, MapRoute::class], version = 10)
 abstract class ClientDatabase : RoomDatabase() {
 
     abstract val clientDao: ClientDao

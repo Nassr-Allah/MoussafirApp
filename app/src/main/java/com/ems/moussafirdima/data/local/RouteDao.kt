@@ -13,6 +13,9 @@ interface RouteDao {
     @Delete
     suspend fun deleteRoute(mapRoute: MapRoute)
 
+    @Query("SELECT * FROM mapRoute WHERE tripId = :tripId")
+    suspend fun getRouteByTripId(tripId: Int): MapRoute?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRoute(mapRoute: MapRoute)
 

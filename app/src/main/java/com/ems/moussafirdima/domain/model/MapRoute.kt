@@ -10,5 +10,6 @@ data class MapRoute(
     val encodedPath: String = "",
     val arrival: String = "",
     val duration: Long = 0,
-    val date: String = ""
+    val date: String = "",
+    val tripId: Int = 0
 )

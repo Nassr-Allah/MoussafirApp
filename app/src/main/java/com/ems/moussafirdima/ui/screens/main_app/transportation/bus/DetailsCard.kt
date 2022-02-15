@@ -53,6 +53,8 @@ fun DetailsCard(
     navController: NavController,
     station: Station?
 ) {
+    day = getCurrentDay()
+    month = getCurrentMonth()
     val context = LocalContext.current.applicationContext
     var tripTime by remember {
         mutableStateOf(time)
@@ -296,7 +298,7 @@ fun BusTripDetails(
             val destination = "${station?.lat},${station?.lng}"
             val key = context.getString(R.string.google_api_key)
             val date = "$day/$month/${Calendar.getInstance().get(Calendar.YEAR)}"
-            directionsViewModel.getDirection(origin, destination, key, date)
+            directionsViewModel.getDirection(origin, destination, key, date, trip)
         }
         if (state.error == "Date Error") {
             scaffoldState.snackbarHostState.showSnackbar(

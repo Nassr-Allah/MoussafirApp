@@ -11,4 +11,6 @@ interface RouteRepository {
 
     suspend fun deleteRoute(mapRoute: MapRoute)
 
+    suspend fun getRouteByTripId(tripId: Int): MapRoute?
+
 }

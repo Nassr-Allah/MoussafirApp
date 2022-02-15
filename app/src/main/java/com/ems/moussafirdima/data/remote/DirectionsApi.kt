@@ -10,6 +10,7 @@ interface DirectionsApi {
     suspend fun getDirection(
         @Query("origin", encoded = true) origin: String,
         @Query("destination", encoded = true) destination: String,
+        @Query("departure_time", encoded = true) departureTime: Long,
         @Query("key", encoded = true) key: String
     ): Direction
 

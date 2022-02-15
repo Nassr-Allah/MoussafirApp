@@ -19,4 +19,8 @@ class RouteRepositoryImpl (private val dao: RouteDao) : RouteRepository {
     override suspend fun deleteRoute(mapRoute: MapRoute) {
         dao.deleteRoute(mapRoute)
     }
+
+    override suspend fun getRouteByTripId(tripId: Int): MapRoute? {
+        return dao.getRouteByTripId(tripId)
+    }
 }

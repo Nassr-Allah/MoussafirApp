@@ -21,15 +21,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ems.moussafirdima.R
+import com.ems.moussafirdima.domain.model.MapRoute
 import com.ems.moussafirdima.domain.model.Ticket
 import com.ems.moussafirdima.ui.materials.CustomSnackBar
 import com.ems.moussafirdima.ui.theme.*
+import com.ems.moussafirdima.ui.view_models.DirectionsViewModel
 import com.ems.moussafirdima.ui.view_models.ticket_view_models.TicketUpdateViewModel
+
+private var mapRoute = MapRoute()
 
 @Composable
 fun TicketDetailsScreen(
     ticket: Ticket?,
-    viewModel: TicketUpdateViewModel = hiltViewModel()
+    viewModel: TicketUpdateViewModel = hiltViewModel(),
+    directionsViewModel: DirectionsViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
@@ -37,6 +42,7 @@ fun TicketDetailsScreen(
         snackbarHost = {
             CustomSnackBar(snackbarHostState = it) {
                 viewModel.updateTicket(ticket!!.id, "paid")
+                directionsViewModel.insertRoute(mapRoute)
             }
         },
         modifier = Modifier.fillMaxSize()
@@ -53,7 +59,7 @@ fun TicketDetailsScreen(
             ) {
                 if (ticket != null) {
                     TicketHeader(ticket = ticket)
-                    TicketSection(ticket, viewModel, scaffoldState)
+                    TicketSection(ticket, viewModel,directionsViewModel, scaffoldState)
                 }
                 Card(
                     modifier = Modifier.fillMaxWidth(0.7f),
@@ -187,9 +193,11 @@ fun TicketDetail(title: String, info: String) {
 fun TicketSection(
     ticket: Ticket?,
     viewModel: TicketUpdateViewModel,
+    directionsViewModel: DirectionsViewModel,
     scaffoldState: ScaffoldState
 ) {
     val state = viewModel.state.value
+    val cachedRoute = directionsViewModel.cachedRoute.value
     val statusColor = if (ticket?.status == "paid") {
         GrassGreen
     } else {
@@ -213,6 +221,12 @@ fun TicketSection(
                 status = "paid"
                 Log.d("TicketStatus", "Paid")
             }
+        }
+    }
+    LaunchedEffect(key1 = cachedRoute) {
+        if (cachedRoute != MapRoute()) {
+            mapRoute = cachedRoute
+            directionsViewModel.deleteRoute(mapRoute)
         }
     }
     Column(
@@ -285,6 +299,7 @@ fun TicketSection(
                 fontSize = dimensionResource(R.dimen.h2).value.sp,
                 modifier = Modifier.clickable {
                     viewModel.updateTicket(ticket!!.id, "canceled")
+                    directionsViewModel.getRouteByTripId(ticket.trip!!.id)
                 }
             )
         }
