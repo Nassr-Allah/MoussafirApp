@@ -40,6 +40,14 @@ interface MoussafirApi {
     suspend fun autoLogin(@Field("token") token: String): Response<Void>
 
     @FormUrlEncoded
+    @POST("users/changepassword/")
+    suspend fun changePassword(
+        @Field("phone_number") phoneNumber: String,
+        @Field("password") password: String
+    ): Response<Void>
+
+
+    @FormUrlEncoded
     @POST("trips/ticket/")
     suspend fun addTicket(
         @Field("date") date: String,

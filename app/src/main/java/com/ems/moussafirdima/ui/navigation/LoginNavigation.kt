@@ -38,8 +38,11 @@ fun LoginNavigation(isNetworkAvailable: Boolean) {
         composable(route = AuthScreens.PasswordResetScreen.route) {
             ResetPasswordScreen(navController = navController)
         }
-        composable(route = AuthScreens.NewPasswordScreen.route) {
-            NewPasswordScreen(navController = navController)
+        composable(route = AuthScreens.NewPasswordScreen.route + "/{phone}") {
+            NewPasswordScreen(
+                navController = navController,
+                phoneNumber = it.arguments?.getString("phone") ?: ""
+            )
         }
         composable(route = AuthScreens.GenderScreen.route) {
             val user = navController.previousBackStackEntry?.arguments
@@ -51,8 +54,11 @@ fun LoginNavigation(isNetworkAvailable: Boolean) {
                 ?.getParcelable<User>("user")
             OtpScreen(navController = navController, user = user)
         }
-        composable(route = AuthScreens.OtpResetScreen.route) {
-            OtpResetScreen(navController = navController)
+        composable(route = AuthScreens.OtpResetScreen.route + "/{phone}") {
+            OtpResetScreen(
+                navController = navController,
+                phoneNumber = it.arguments?.getString("phone") ?: ""
+            )
         }
         composable(route = AuthScreens.SplashScreen.route) {
             SplashScreen(navController = navController, isNetworkAvailable = isNetworkAvailable)
@@ -61,6 +67,9 @@ fun LoginNavigation(isNetworkAvailable: Boolean) {
             val user = navController.previousBackStackEntry?.arguments
                 ?.getParcelable<User>("user")
             ProfilePictureScreen(navController = navController, user = user)
+        }
+        composable(route = AuthScreens.PasswordChangedScreen.route) {
+            PasswordChangedScreen(navController = navController)
         }
     }
 }

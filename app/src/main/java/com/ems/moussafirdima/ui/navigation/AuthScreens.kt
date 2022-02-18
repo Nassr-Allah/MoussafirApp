@@ -13,6 +13,7 @@ sealed class AuthScreens(val route: String) {
     object OtpScreen : AuthScreens("otp_screen")
     object OtpResetScreen : AuthScreens("otp_reset_screen")
     object ProfilePictureScreen : AuthScreens("profile_picture_screen")
+    object PasswordChangedScreen : AuthScreens("password_changed_screen")
 
     fun withArgs(vararg args: String): String {
         return buildString {

@@ -1,5 +1,6 @@
 package com.ems.moussafirdima.ui.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,24 +11,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ems.moussafirdima.R
 import com.ems.moussafirdima.ui.navigation.AuthScreens
 import com.ems.moussafirdima.ui.theme.MoussafirDimaTheme
 import com.ems.moussafirdima.ui.theme.Orange
+import com.ems.moussafirdima.ui.view_models.PhoneVerificationViewModel
+import kotlinx.coroutines.delay
 
 
 @Composable
-fun OtpResetScreen(navController: NavController) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 30.dp, vertical = 15.dp)) {
+fun OtpResetScreen(
+    navController: NavController,
+    phoneVerificationViewModel: PhoneVerificationViewModel = hiltViewModel(),
+    phoneNumber: String
+) {
+    val state = phoneVerificationViewModel.state.value
+    val context = LocalContext.current.applicationContext
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 30.dp, vertical = 15.dp)
+    ) {
         Column(
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.SpaceEvenly
@@ -35,14 +48,22 @@ fun OtpResetScreen(navController: NavController) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_back),
                 contentDescription = null,
-                modifier = Modifier.size(30.dp).clickable {
-                    navController.navigateUp()
-                }
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable {
+                        navController.navigateUp()
+                    }
             )
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.twenty_five_dp)))
             OtpResetScreenHeader()
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.twenty_five_dp)))
-            CodeResetFields(code = "123456", navController)
+            if (!state.isLoading && state.code.isNotEmpty()) {
+                CodeResetFields(code = state.code, navController, phoneVerificationViewModel, phoneNumber)
+            } else if (state.isLoading) {
+                CodeResetFields(code = "", navController, phoneVerificationViewModel, phoneNumber)
+            } else if (state.error.isNotEmpty()) {
+                Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
@@ -68,10 +89,17 @@ fun OtpResetScreenHeader() {
 }
 
 @Composable
-fun CodeResetFields(code: String, navController: NavController) {
+fun CodeResetFields(
+    code: String,
+    navController: NavController,
+    phoneVerificationViewModel: PhoneVerificationViewModel,
+    phoneNumber: String
+) {
+    val context = LocalContext.current.applicationContext
     var smsCode by remember {
-        mutableStateOf(code)
+        mutableStateOf("000000")
     }
+    var savedCode = code
     var resendCode by remember {
         mutableStateOf("Resend Code")
     }
@@ -92,6 +120,16 @@ fun CodeResetFields(code: String, navController: NavController) {
     }
     var sixthDigit by remember {
         mutableStateOf(smsCode[5])
+    }
+    val totalTime = 60000L
+    var currentTime by remember {
+        mutableStateOf(totalTime)
+    }
+    LaunchedEffect(key1 = currentTime) {
+        if (currentTime > 0) {
+            delay(100L)
+            currentTime -= 100L
+        }
     }
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
@@ -216,15 +254,29 @@ fun CodeResetFields(code: String, navController: NavController) {
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.twenty_dp)))
             Text(
-                text = resendCode,
+                text = if (currentTime == 0L) "Resend Code" else (currentTime / 1000L).toString(),
                 style = MaterialTheme.typography.body1,
                 color = Color.Black,
-                fontSize = dimensionResource(R.dimen.body1).value.sp
+                fontSize = dimensionResource(R.dimen.body1).value.sp,
+                modifier = Modifier.clickable {
+                    if (currentTime == 0L) {
+                        phoneVerificationViewModel.recall()
+                        savedCode = phoneVerificationViewModel.state.value.code
+                        currentTime = 60000L
+                    }
+                }
             )
         }
         Button(
             onClick = {
-                navController.navigate(AuthScreens.NewPasswordScreen.route)
+                val inputCode = "$firstDigit$secondDigit$thirdDigit$fourthDigit$fifthDigit$sixthDigit"
+                if (inputCode == savedCode) {
+                    navController.navigate(AuthScreens.NewPasswordScreen.withArgs(phoneNumber)) {
+                        popUpTo(AuthScreens.PasswordResetScreen.route)
+                    }
+                } else {
+                    Toast.makeText(context, "Wrong Code!", Toast.LENGTH_SHORT).show()
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -241,16 +293,3 @@ fun CodeResetFields(code: String, navController: NavController) {
         }
     }
 }
-
-/*
-@Preview()
-@Composable
-fun OtpPreview() {
-    MoussafirDimaTheme() {
-        Surface(color = MaterialTheme.colors.background) {
-            OtpScreen()
-        }
-    }
-}
-
- */

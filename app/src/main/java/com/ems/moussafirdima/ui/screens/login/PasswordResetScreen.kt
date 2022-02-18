@@ -149,7 +149,7 @@ fun TextFieldAndButtonSection(navController: NavController) {
                     visible = true
                 } else {
                     visible = false
-                    navController.navigate(AuthScreens.OtpResetScreen.route)
+                    navController.navigate(AuthScreens.OtpResetScreen.withArgs("+213$phoneNumber"))
                 }
             },
             modifier = Modifier
@@ -167,17 +167,3 @@ fun TextFieldAndButtonSection(navController: NavController) {
         }
     }
 }
-
-/*
-@ExperimentalAnimationApi
-@Preview()
-@Composable
-fun ResetPasswordPreview() {
-    MoussafirDimaTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            ResetPasswordScreen()
-        }
-    }
-}
-
- */

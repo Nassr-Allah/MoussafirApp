@@ -22,4 +22,6 @@ interface ClientRepository {
 
     suspend fun autoLogin(token: String): Response<Void>
 
+    suspend fun changePassword(phoneNumber: String, password: String): Response<Void>
+
 }

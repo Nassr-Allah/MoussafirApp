@@ -23,7 +23,6 @@ import com.ems.moussafirdima.ui.navigation.AuthScreens
 import com.ems.moussafirdima.ui.theme.MoussafirDimaTheme
 import com.ems.moussafirdima.ui.theme.Orange
 
-private lateinit var phoneNumber: String
 
 @Composable
 fun CreateProfileScreen(navController: NavController) {
@@ -220,7 +219,7 @@ fun InputFormSection(navController: NavController) {
                 val user = User(
                     firstName = firstName,
                     lastName = lastName,
-                    phoneNumber = phoneNumber,
+                    phoneNumber = "0$phoneNumber",
                     email = email,
                     address = location
                 )

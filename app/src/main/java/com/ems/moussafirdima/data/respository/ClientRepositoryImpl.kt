@@ -42,4 +42,8 @@ class ClientRepositoryImpl @Inject constructor(
     override suspend fun autoLogin(token: String): Response<Void> {
         return api.autoLogin(token)
     }
+
+    override suspend fun changePassword(phoneNumber: String, password: String): Response<Void> {
+        return api.changePassword(phoneNumber, password)
+    }
 }
