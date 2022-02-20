@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -91,14 +92,14 @@ fun ScreenComponents(navController: NavController, code: String, context: Contex
 fun OtpScreenHeader() {
     Column {
         Text(
-            text = "OTP Verification",
+            text = stringResource(id = R.string.otp_verification),
             style = MaterialTheme.typography.h2,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.h1).value.sp
         )
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.five_dp)))
         Text(
-            text = "Type the code sent via SMS",
+            text = stringResource(id = R.string.type_the_code_sent_via_sms),
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
@@ -115,7 +116,7 @@ fun CodeFields(code: String, navController: NavController, context: Context,
     }
     var savedCode = code
     var resendCode by remember {
-        mutableStateOf("Resend Code")
+        mutableStateOf(context.getString(R.string.resend_code))
     }
     var firstDigit by remember {
         mutableStateOf(smsCode[0])
@@ -275,7 +276,7 @@ fun CodeFields(code: String, navController: NavController, context: Context,
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.twenty_dp)))
             Text(
-                text = if (currentTime == 0L) "Resend Code" else (currentTime/1000L).toString() ,
+                text = if (currentTime == 0L) resendCode else (currentTime/1000L).toString() ,
                 style = MaterialTheme.typography.body1,
                 color = Color.Black,
                 fontSize = dimensionResource(R.dimen.body1).value.sp,
@@ -297,7 +298,7 @@ fun CodeFields(code: String, navController: NavController, context: Context,
                         popUpTo(AuthScreens.CreateProfileScree.route)
                     }
                 } else {
-                    Toast.makeText(context, "Wrong Code!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.wrong_code), Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -307,7 +308,7 @@ fun CodeFields(code: String, navController: NavController, context: Context,
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
         ) {
             Text(
-                text = "Confirm",
+                text = stringResource(id = R.string.confirm),
                 style = MaterialTheme.typography.body1,
                 fontSize = dimensionResource(R.dimen.body1).value.sp,
                 color = Color.White
@@ -315,16 +316,3 @@ fun CodeFields(code: String, navController: NavController, context: Context,
         }
     }
 }
-
-/*
-@Preview()
-@Composable
-fun OtpPreview() {
-    MoussafirDimaTheme() {
-        Surface(color = MaterialTheme.colors.background) {
-            OtpScreen()
-        }
-    }
-}
-
- */

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,21 +76,21 @@ fun ResetPasswordScreen(navController: NavController) {
 @Composable
 fun PasswordResetScreenHeader() {
     Text(
-        text = "Reset your password",
+        text = stringResource(id = R.string.reset_your_password),
         style = MaterialTheme.typography.h1,
         color = Color.Black,
         fontSize = dimensionResource(R.dimen.h1).value.sp
     )
     Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.fifteen_dp)))
     Text(
-        text = "Enter your phone number",
+        text = stringResource(id = R.string.enter_your_phone_number),
         style = MaterialTheme.typography.h2,
         color = Color.Black,
         fontSize = dimensionResource(R.dimen.h2).value.sp
     )
     Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.ten_dp)))
     Text(
-        text = "to reset password",
+        text = stringResource(id = R.string.to_reset_your_password),
         style = MaterialTheme.typography.h2,
         color = Color.Black,
         fontSize = dimensionResource(R.dimen.h2).value.sp
@@ -117,7 +118,7 @@ fun TextFieldAndButtonSection(navController: NavController) {
             },
             label = {
                 Text(
-                    text = "Phone Number",
+                    text = stringResource(id = R.string.phone_number),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                 )
@@ -140,7 +141,7 @@ fun TextFieldAndButtonSection(navController: NavController) {
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            ErrorMessage(errorMessage = "Phone Number is empty")
+            ErrorMessage(errorMessage = stringResource(id = R.string.phone_number_is_empty))
         }
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.twenty_five_dp)))
         Button(
@@ -159,7 +160,7 @@ fun TextFieldAndButtonSection(navController: NavController) {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
         ) {
             Text(
-                text = "Next",
+                text = stringResource(id = R.string.next),
                 style = MaterialTheme.typography.body1,
                 color = Color.White,
                 fontSize = dimensionResource(R.dimen.body1).value.sp

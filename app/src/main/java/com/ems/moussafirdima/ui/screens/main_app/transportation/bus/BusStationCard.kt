@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -71,57 +72,14 @@ fun BusStationCard(
                 .padding(horizontal = 10.dp, vertical = 10.dp),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color.Black,
-                        unfocusedBorderColor = Color.Gray,
-                        focusedLabelColor = Color.Black,
-                        unfocusedLabelColor = Color.Gray,
-                        backgroundColor = Color.Transparent,
-                        disabledLeadingIconColor = Color.Gray,
-                        leadingIconColor = Color.Black
-                    ),
-                    modifier = Modifier.fillMaxWidth(0.6f),
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_search),
-                            contentDescription = null,
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
-                )
-                Button(
-                    onClick = {
-
-                    },
-                    modifier = Modifier
-                        .height(50.dp)
-                        .clip(RoundedCornerShape(15)),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
-                ) {
-                    Text(
-                        text = "Search",
-                        style = MaterialTheme.typography.body1,
-                        fontSize = dimensionResource(id = R.dimen.body1).value.sp,
-                        color = Color.White
-                    )
-                }
-            }
             Text(
-                text = "Choose starting station",
+                text = stringResource(id = R.string.choose_station),
                 style = MaterialTheme.typography.body1,
                 color = Color.Black,
                 fontSize = dimensionResource(R.dimen.body1).value.sp,
                 modifier = Modifier.padding(start = 10.dp)
             )
-            Box(modifier = Modifier.fillMaxHeight(0.5f)) {
+            Box(modifier = Modifier.fillMaxHeight(0.7f), contentAlignment = Alignment.TopCenter) {
                 StatesList(list = state.stations, navController, GlobalVars.map!!, destination)
             }
             Box(

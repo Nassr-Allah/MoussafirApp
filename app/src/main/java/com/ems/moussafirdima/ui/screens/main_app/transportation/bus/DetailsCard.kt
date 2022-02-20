@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -113,7 +114,7 @@ fun DetailsCard(
                         } else if (date.isBefore(LocalDate.now())) {
                             Toast.makeText(
                                 context,
-                                "This date has already passed",
+                                context.getString(R.string.this_date_already_passed),
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
@@ -128,7 +129,7 @@ fun DetailsCard(
                     }
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                         if (timesList.isEmpty()) {
-                            Text(text = "No Trips Available Today")
+                            Text(text = stringResource(id = R.string.no_trips_available_today))
                         } else {
                             TimeChips(list = timesList) {
                                 tripTime = time
@@ -159,7 +160,7 @@ fun DetailsCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No trips available for now",
+                    text = stringResource(id = R.string.no_trips_for_now),
                     style = MaterialTheme.typography.h2,
                     fontSize = dimensionResource(R.dimen.h2).value.sp,
                     color = Color.Black
@@ -189,7 +190,7 @@ fun DetailsCardHeader(selectedDay: String, selectedMonth: String, onDatePicked: 
         dialogState = dialogState,
         buttons = {
             positiveButton("OK")
-            negativeButton("CANCEL")
+            negativeButton(stringResource(id = R.string.cancel))
         },
     ) {
         datepicker { date ->
@@ -202,7 +203,7 @@ fun DetailsCardHeader(selectedDay: String, selectedMonth: String, onDatePicked: 
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         Text(
-            text = "Book your ticket",
+            text = stringResource(id = R.string.book_your_ticker),
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.body1).value.sp
@@ -302,8 +303,8 @@ fun BusTripDetails(
         }
         if (state.error == "Date Error") {
             scaffoldState.snackbarHostState.showSnackbar(
-                message = "Reservation Limit is 24 hours",
-                actionLabel = "Dismiss",
+                message = context.getString(R.string.reservation_limit),
+                actionLabel = context.getString(R.string.dismiss),
                 duration = SnackbarDuration.Indefinite
             )
         }
@@ -375,7 +376,7 @@ fun BusTripDetails(
                     }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = "Ticket",
+                            text = stringResource(id = R.string.ticket),
                             style = MaterialTheme.typography.body1,
                             color = Color.Black,
                             fontSize = dimensionResource(R.dimen.body1).value.sp
@@ -439,7 +440,7 @@ fun BusTripDetails(
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Please Choose a time",
+                                    context.getString(R.string.please_choose_a_time),
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
@@ -451,7 +452,7 @@ fun BusTripDetails(
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
                     ) {
                         Text(
-                            text = "Get",
+                            text = stringResource(id = R.string.get),
                             style = MaterialTheme.typography.body1,
                             fontSize = dimensionResource(id = R.dimen.body1).value.sp,
                             color = Color.White

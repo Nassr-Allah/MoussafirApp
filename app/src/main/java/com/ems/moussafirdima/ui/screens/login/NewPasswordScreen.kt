@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -76,14 +77,14 @@ fun NewPasswordScreen(
 fun NewPasswordScreenHeader() {
     Column {
         Text(
-            text = "Enter",
+            text = stringResource(id = R.string.enter),
             style = MaterialTheme.typography.h2,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.h0).value.sp
         )
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.five_dp)))
         Text(
-            text = "Password",
+            text = stringResource(id = R.string.password),
             style = MaterialTheme.typography.h2,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.h0).value.sp
@@ -137,7 +138,7 @@ fun PasswordFields(
             onValueChange = { password = it },
             label = {
                 Text(
-                    text = "New Password",
+                    text = stringResource(id = R.string.new_password),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                 )
@@ -163,7 +164,7 @@ fun PasswordFields(
             },
             label = {
                 Text(
-                    text = "Confirm Password",
+                    text = stringResource(id = R.string.confirm_password),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                 )
@@ -186,9 +187,9 @@ fun PasswordFields(
             exit = fadeOut()
         ) {
             if (password == rePassword) {
-                SuccessMessage(message = "Passwords Match")
+                SuccessMessage(message = stringResource(id = R.string.passwords_match))
             } else {
-                ErrorMessage(errorMessage = "Passwords don't match")
+                ErrorMessage(errorMessage = stringResource(id = R.string.passwords_dont_match))
             }
         }
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.thirty_five_dp)))
@@ -206,7 +207,7 @@ fun PasswordFields(
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
         ) {
             Text(
-                text = "Confirm",
+                text = stringResource(id = R.string.confirm),
                 style = MaterialTheme.typography.body1,
                 fontSize = dimensionResource(R.dimen.body1).value.sp,
                 color = Color.White,
@@ -224,21 +225,21 @@ fun Guidelines() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Required (A-Z) letter",
+            text = stringResource(id = R.string.required_uppercase),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = "Required (a-z) letter",
+            text = stringResource(id = R.string.required_lowercase),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = "Required numbers (0-9)",
+            text = stringResource(id = R.string.required_numbers),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Color.Black

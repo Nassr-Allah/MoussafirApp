@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,7 +56,7 @@ fun TopSection() {
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = "Let's take a long trip",
+            text = stringResource(id = R.string.lets_take_a_long_trip),
             style = MaterialTheme.typography.h2,
             color = Color.Black,
             fontSize = dimensionResource(id = R.dimen.h2).value.sp,
@@ -63,7 +64,7 @@ fun TopSection() {
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = "Enjoy!",
+            text = stringResource(id = R.string.enjoy),
             style = MaterialTheme.typography.h2,
             color = Color.Black,
             fontSize = dimensionResource(id = R.dimen.h2).value.sp,
@@ -80,7 +81,7 @@ fun BottomSection(navController: NavController) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "sign up",
+            text = stringResource(id = R.string.sign_up),
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             fontSize = dimensionResource(id = R.dimen.body1).value.sp,
@@ -96,7 +97,7 @@ fun BottomSection(navController: NavController) {
             colors = ButtonDefaults.buttonColors(Color.Black)
         ) {
             Text(
-                text = "sign in",
+                text = stringResource(id = R.string.sign_in),
                 style = MaterialTheme.typography.body1,
                 color = Color.White,
                 fontSize = dimensionResource(id = R.dimen.body1).value.sp
@@ -105,15 +106,3 @@ fun BottomSection(navController: NavController) {
     }
 }
 
-/*
-@Preview(device = Devices.NEXUS_5)
-@Composable
-fun HomeScreenPreview() {
-    MoussafirDimaTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            HomeScreen()
-        }
-    }
-}
-
- */

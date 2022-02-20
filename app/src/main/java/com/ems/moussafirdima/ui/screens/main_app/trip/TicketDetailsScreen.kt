@@ -15,8 +15,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -114,7 +116,7 @@ fun TicketHeader(ticket: Ticket?) {
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = "Start",
+                    text = stringResource(R.string.start),
                     style = MaterialTheme.typography.body1,
                     color = Color.Black,
                     fontSize = dimensionResource(R.dimen.body2).value.sp
@@ -135,7 +137,7 @@ fun TicketHeader(ticket: Ticket?) {
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = "Destination",
+                    text = stringResource(R.string.destination),
                     style = MaterialTheme.typography.body1,
                     color = Color.Black,
                     fontSize = dimensionResource(R.dimen.body2).value.sp
@@ -153,18 +155,18 @@ fun TicketDetailsSection(ticket: Ticket?) {
         modifier = Modifier.fillMaxWidth()
     ) {
         Column {
-            TicketDetail(title = "Passenger", info = name)
+            TicketDetail(title = stringResource(R.string.passenger), info = name)
             Spacer(modifier = Modifier.height(20.dp))
-            TicketDetail(title = "Bus Driver", info = ticket.trip!!.driver)
+            TicketDetail(title = stringResource(R.string.bus_driver), info = ticket.trip!!.driver)
             Spacer(modifier = Modifier.height(20.dp))
-            TicketDetail(title = "Price", info = "${ticket.price} DA")
+            TicketDetail(title = stringResource(R.string.price), info = "${ticket.price} DA")
         }
         Column {
-            TicketDetail(title = "Date", info = "${ticket.date} - ${ticket.time}")
+            TicketDetail(title = stringResource(R.string.date), info = "${ticket.date} - ${ticket.time}")
             Spacer(modifier = Modifier.height(20.dp))
-            TicketDetail(title = "Reserved By", info = ticket.reservedBy)
+            TicketDetail(title = stringResource(R.string.reserved_by), info = ticket.reservedBy)
             Spacer(modifier = Modifier.height(20.dp))
-            TicketDetail(title = "Place", info = ticket.placeNumber)
+            TicketDetail(title = stringResource(R.string.place), info = ticket.placeNumber)
         }
     }
 }
@@ -197,6 +199,7 @@ fun TicketSection(
     scaffoldState: ScaffoldState
 ) {
     val state = viewModel.state.value
+    val context = LocalContext.current.applicationContext
     val cachedRoute = directionsViewModel.cachedRoute.value
     val statusColor = if (ticket?.status == "paid") {
         GrassGreen
@@ -210,7 +213,7 @@ fun TicketSection(
         if (!state.isLoading && state.response != null && state.response.isSuccessful) {
             if (ticket!!.status == "paid") {
                 ticket.status = "canceled"
-                status = "canceled"
+                status = context.getString(R.string.canceled)
                 scaffoldState.snackbarHostState.showSnackbar(
                     message = "Ticket Canceled",
                     actionLabel = "Undo",
@@ -218,7 +221,7 @@ fun TicketSection(
                 )
             } else {
                 ticket.status = "paid"
-                status = "paid"
+                status = context.getString(R.string.paid)
                 Log.d("TicketStatus", "Paid")
             }
         }
@@ -293,7 +296,7 @@ fun TicketSection(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "CANCEL",
+                text = stringResource(R.string.cancel),
                 style = MaterialTheme.typography.h2,
                 color = LightRed,
                 fontSize = dimensionResource(R.dimen.h2).value.sp,

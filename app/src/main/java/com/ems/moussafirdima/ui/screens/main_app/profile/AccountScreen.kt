@@ -74,7 +74,7 @@ fun AccountScreen(
                                 MapScreens.LanguageScreen.route
                             ),
                             AccountListItem(
-                                R.drawable.bus, stringResource(R.string.trips),
+                                R.drawable.bus, stringResource(R.string.tickets),
                                 MapScreens.TripsScreen.withArgs(state.client.token)
                             ),
                             AccountListItem(

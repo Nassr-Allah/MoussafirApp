@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -80,7 +81,7 @@ fun TicketInterface(navController: NavController) {
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "Ticket Added Successfully!",
+                    text = stringResource(id = R.string.ticket_added_successfully),
                     style = MaterialTheme.typography.h2,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                     color = GrassGreen,

@@ -1,5 +1,6 @@
 package com.ems.moussafirdima.ui.materials
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,8 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -74,14 +77,14 @@ fun HaveAnAccountSection(navController: NavController) {
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "have an account?",
+            text = stringResource(id = R.string.have_an_account),
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.body1).value.sp
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = "sign in",
+            text = stringResource(id = R.string.sign_in),
             style = MaterialTheme.typography.body1,
             color = Orange,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
@@ -96,6 +99,7 @@ fun HaveAnAccountSection(navController: NavController) {
 
 @Composable
 fun TransportationMethodBus() {
+    val context = LocalContext.current.applicationContext
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -123,7 +127,7 @@ fun TransportationMethodBus() {
                 .clip(RoundedCornerShape(15))
                 .background(Color.Black)
                 .clickable {
-
+                    Toast.makeText(context, context.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
                 }
                 .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {

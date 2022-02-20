@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -102,7 +103,7 @@ fun SignUpScreen(
                 if (!state.isLoading && state.client != null) {
                     deleteClientViewModel.deleteClient()
                     insertClientViewModel.insertClient(state.client)
-                    Toast.makeText(context, "Account Created!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.account_created), Toast.LENGTH_SHORT).show()
                     val toTransportation = Intent(context, TransportationActivity::class.java)
                     toTransportation.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(toTransportation)
@@ -135,7 +136,7 @@ fun SignUpScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Create",
+                        text = stringResource(id = R.string.create),
                         style = MaterialTheme.typography.body1,
                         fontSize = dimensionResource(id = R.dimen.body1).value.sp,
                         color = Color.White,
@@ -155,7 +156,7 @@ fun SignUpScreen(
 fun SignUpHeader() {
     Column {
         Text(
-            text = "Create",
+            text = stringResource(id = R.string.gender),
             style = MaterialTheme.typography.h1,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.h0).value.sp
@@ -270,7 +271,7 @@ fun ProfileGender(gender: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Gender",
+            text = stringResource(id = R.string.gender),
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.body1).value.sp
@@ -310,16 +311,3 @@ fun ProfileGender(gender: String) {
         }
     }
 }
-
-/*
-@Preview()
-@Composable
-fun SignUpPreview() {
-    MoussafirDimaTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            SignUpScreen()
-        }
-    }
-}
-
- */

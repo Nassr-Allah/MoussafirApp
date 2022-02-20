@@ -17,12 +17,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ems.moussafirdima.R
+import com.ems.moussafirdima.ui.materials.SupportListItem
 import com.ems.moussafirdima.ui.theme.LightGray
 import com.ems.moussafirdima.ui.theme.MoussafirDimaTheme
 
@@ -35,12 +37,15 @@ fun SupportScreen(navController: NavController) {
     ) {
         SupportScreenHeader(navController)
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            SupportScreenList(list = listOf(
-                "Contact Us",
-                "FAQ",
-                "Feedback",
-                "About Us"
-            ))
+            SupportScreenList(
+                list = listOf(
+                    SupportListItem(stringResource(id = R.string.contact_us), ""),
+                    SupportListItem(stringResource(id = R.string.about_us), ""),
+                    SupportListItem("Feedback", ""),
+                    SupportListItem(stringResource(id = R.string.terms_of_service), ""),
+                ),
+                navController = navController
+            )
         }
     }
 }
@@ -63,7 +68,7 @@ fun SupportScreenHeader(navController: NavController) {
         )
         Spacer(modifier = Modifier.width(dimensionResource(R.dimen.thirty_dp)))
         Text(
-            text = "Help & Support",
+            text = stringResource(id = R.string.help_support),
             style = MaterialTheme.typography.h2,
             fontSize = dimensionResource(R.dimen.h0).value.sp,
             color = Color.Black
@@ -72,24 +77,29 @@ fun SupportScreenHeader(navController: NavController) {
 }
 
 @Composable
-fun SupportScreenList(list: List<String>) {
+fun SupportScreenList(list: List<SupportListItem>, navController: NavController) {
     LazyColumn {
         items(list.size) {
-            SupportScreenListItem(name = list[it])
+            SupportScreenListItem(item = list[it], navController)
         }
     }
 }
 
 @Composable
-fun SupportScreenListItem(name: String) {
+fun SupportScreenListItem(item: SupportListItem, navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 10.dp),
+            .padding(vertical = 10.dp)
+            .clickable {
+                if (item.route.isNotEmpty()) {
+                    navController.navigate(item.route)
+                }
+            },
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = name,
+            text = item.title,
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.h1).value.sp

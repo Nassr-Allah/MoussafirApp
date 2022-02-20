@@ -1,5 +1,6 @@
 package com.ems.moussafirdima.ui.screens.main_app.transportation.bus
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -7,14 +8,18 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,6 +33,7 @@ import com.ems.moussafirdima.ui.navigation.TransportationScreens
 import com.ems.moussafirdima.ui.theme.Orange
 import com.ems.moussafirdima.ui.view_models.trips_view_models.TripsListViewModel
 
+@ExperimentalComposeUiApi
 @Composable
 fun BusDestinationCard(
     navController: NavController,
@@ -37,6 +43,8 @@ fun BusDestinationCard(
     var searchQuery by remember {
         mutableStateOf("")
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    Log.d("BusDestinationCard", "${tripsListViewModel.filteredTrips.value}")
     Card(
         modifier = Modifier
             .fillMaxHeight(0.5f)
@@ -55,7 +63,13 @@ fun BusDestinationCard(
             ) {
                 OutlinedTextField(
                     value = searchQuery,
-                    onValueChange = { searchQuery = it },
+                    onValueChange = {
+                        searchQuery = it
+                        if (searchQuery.isEmpty()) {
+                            tripsListViewModel.restoreList()
+                            keyboardController?.hide()
+                        }
+                    },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color.Black,
                         unfocusedBorderColor = Color.Gray,
@@ -72,11 +86,12 @@ fun BusDestinationCard(
                             contentDescription = null,
                             modifier = Modifier.size(30.dp)
                         )
-                    }
+                    },
                 )
                 Button(
                     onClick = {
-
+                        tripsListViewModel.filterTrips(searchQuery)
+                        keyboardController?.hide()
                     },
                     modifier = Modifier
                         .height(50.dp)
@@ -84,7 +99,7 @@ fun BusDestinationCard(
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
                 ) {
                     Text(
-                        text = "Search",
+                        text = stringResource(id = R.string.search),
                         style = MaterialTheme.typography.body1,
                         fontSize = dimensionResource(id = R.dimen.body1).value.sp,
                         color = Color.White
@@ -92,7 +107,7 @@ fun BusDestinationCard(
                 }
             }
             Text(
-                text = "Choose destination",
+                text = stringResource(id = R.string.choose_a_destination),
                 style = MaterialTheme.typography.body1,
                 color = Color.Black,
                 fontSize = dimensionResource(R.dimen.body1).value.sp,
@@ -103,9 +118,11 @@ fun BusDestinationCard(
                 contentAlignment = Alignment.Center
             ) {
                 if (!state.isLoading && state.error.isEmpty()) {
-                    StationsList(state.trips, navController)
+                    StationsList(tripsListViewModel.filteredTrips.value, navController)
                 } else if (state.isLoading) {
-                    CircularProgressIndicator(color = Orange)
+                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(color = Orange)
+                    }
                 } else if (!state.isLoading && state.error.isNotEmpty()) {
                     Text(
                         text = "Error: ${state.error}",
@@ -131,7 +148,9 @@ fun StationsList(trips: List<Trip>?, navController: NavController) {
     for (trip in trips!!) {
         destinations.add(trip.destination)
     }
-    destinations = destinations.distinct() as MutableList<String>
+    if (destinations.isNotEmpty()) {
+        destinations = destinations.distinct() as MutableList<String>
+    }
     LazyColumn {
         items(destinations) { destination ->
             ProvinceStationBox(destination, navController)

@@ -21,14 +21,9 @@ import com.ems.moussafirdima.R
 import com.ems.moussafirdima.data.remote.dto.directions_api.Direction
 import com.ems.moussafirdima.domain.model.Station
 import com.ems.moussafirdima.ui.navigation.TransportationScreens
-import com.ems.moussafirdima.ui.screens.main_app.arrivalTime
-import com.ems.moussafirdima.ui.screens.main_app.arrivalTimeAlpha
 import com.ems.moussafirdima.ui.view_models.states.LocationState
 import com.google.android.libraries.maps.model.*
 import com.google.maps.android.PolyUtil
-import com.google.maps.android.ktx.addPolygon
-import java.security.Permission
-import java.security.Permissions
 
 var currentLocation: Location? = null
 
@@ -244,8 +239,12 @@ fun isDistanceLessThanMax(start: Location, end: Location) : Boolean {
     return distance <= 30
 }
 
-fun calculateDistance(start: Location, end: Location) : Int {
-    return (start.distanceTo(end) / 1000).toInt()
+fun calculateDistance(start: Location?, end: Location) : Int {
+    return if (start != null) {
+        (start.distanceTo(end) / 1000).toInt()
+    } else {
+        0
+    }
 }
 
 fun handleMarkerClick(map: GoogleMap, navController: NavController, destination: String, station: Station) {
@@ -256,4 +255,8 @@ fun handleMarkerClick(map: GoogleMap, navController: NavController, destination:
         }
         true
     }
+}
+
+fun moveCamera(map: GoogleMap, latLng: LatLng) {
+    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
 }

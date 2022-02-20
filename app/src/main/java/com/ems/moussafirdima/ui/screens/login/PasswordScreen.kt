@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -74,14 +75,14 @@ fun PasswordScreen(name: String, navController: NavController, user: User?) {
 fun PasswordScreenHeader(name: String) {
     Column {
         Text(
-            text = "Hello $name !",
+            text = "${stringResource(id = R.string.hello)} $name !",
             style = MaterialTheme.typography.h2,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.h1).value.sp
         )
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.five_dp)))
         Text(
-            text = "complete your registration",
+            text = stringResource(id = R.string.complete_your_registration),
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
@@ -120,7 +121,7 @@ fun PasswordTextFields(navController: NavController, user: User?) {
             onValueChange = { password = it },
             label = {
                 Text(
-                    text = "Password",
+                    text = stringResource(id = R.string.password),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                 )
@@ -156,7 +157,7 @@ fun PasswordTextFields(navController: NavController, user: User?) {
             },
             label = {
                 Text(
-                    text = "Confirm Password",
+                    text = stringResource(id = R.string.confirm_password),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                 )
@@ -180,9 +181,9 @@ fun PasswordTextFields(navController: NavController, user: User?) {
             exit = fadeOut()
         ) {
             if (password == rePassword) {
-                SuccessMessage(message = "Passwords Match")
+                SuccessMessage(message = stringResource(id = R.string.passwords_match))
             } else {
-                ErrorMessage(errorMessage = "Passwords don't match")
+                ErrorMessage(errorMessage = stringResource(id = R.string.passwords_dont_match))
             }
         }
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.thirty_five_dp)))
@@ -195,7 +196,7 @@ fun PasswordTextFields(navController: NavController, user: User?) {
                     navController.currentBackStackEntry?.arguments?.putParcelable("user", user)
                     navController.navigate(AuthScreens.GenderScreen.route)
                 } else {
-                    Toast.makeText(context, "Passwords don't match!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.passwords_dont_match), Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -205,7 +206,7 @@ fun PasswordTextFields(navController: NavController, user: User?) {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
         ) {
             Text(
-                text = "Sign up",
+                text = stringResource(id = R.string.sign_up),
                 style = MaterialTheme.typography.body1,
                 fontSize = dimensionResource(R.dimen.body1).value.sp,
                 color = Color.White
@@ -221,21 +222,21 @@ fun PasswordGuidelines() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Required (A-Z) letter",
+            text = stringResource(id = R.string.required_uppercase),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = "Required (a-z) letter",
+            text = stringResource(id = R.string.required_lowercase),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = "Required numbers (0-9)",
+            text = stringResource(id = R.string.required_numbers),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Color.Black

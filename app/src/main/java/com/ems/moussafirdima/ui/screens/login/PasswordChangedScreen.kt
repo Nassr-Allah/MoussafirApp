@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -61,7 +62,7 @@ fun PasswordChangedScreen(navController: NavController) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Password Changed Successfully!",
+                text = stringResource(id = R.string.password_changed),
                 style = MaterialTheme.typography.h2,
                 color = GrassGreen,
                 fontSize = dimensionResource(R.dimen.h2).value.sp,

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,7 @@ fun GenderScreen(navController: NavController, user: User?) {
             )
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.twenty_five_dp)))
             Text(
-                text = "Which one are you",
+                text = stringResource(R.string.which_one_are_you),
                 style = MaterialTheme.typography.h1,
                 color = Color.Black,
                 fontSize = dimensionResource(R.dimen.h0).value.sp
@@ -137,7 +138,7 @@ fun GenderSelectionSection(navController: NavController, user: User?) {
                     navController.currentBackStackEntry?.arguments?.putParcelable("user", user)
                     navController.navigate(AuthScreens.ProfilePictureScreen.route)
                 } else {
-                    Toast.makeText(context, "Pick a Gender!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.pick_a_gender), Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -147,7 +148,7 @@ fun GenderSelectionSection(navController: NavController, user: User?) {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
         ) {
             Text(
-                text = "Confirm",
+                text = stringResource(R.string.confirm),
                 style = MaterialTheme.typography.body1,
                 fontSize = dimensionResource(id = R.dimen.body1).value.sp,
                 color = Color.White

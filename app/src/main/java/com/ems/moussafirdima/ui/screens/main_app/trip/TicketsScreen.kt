@@ -51,9 +51,6 @@ fun TripsScreen(
     ticketsListViewModel: TicketsListViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    var filteredTickets by remember {
-        mutableStateOf(ticketsList)
-    }
     val state = ticketsListViewModel.state.value
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -63,7 +60,7 @@ fun TripsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(R.string.trips),
+                text = stringResource(R.string.tickets),
                 style = MaterialTheme.typography.h1,
                 color = Color.Black,
                 fontSize = dimensionResource(R.dimen.h1).value.sp
@@ -71,12 +68,12 @@ fun TripsScreen(
             Spacer(modifier = Modifier.height(10.dp))
             FiltersList(
                 list = listOf(
-                    "All",
-                    "Today",
-                    "Last Week",
-                    "Last Month",
-                    "Paid",
-                    "Canceled"
+                    stringResource(R.string.all),
+                    stringResource(R.string.today),
+                    stringResource(R.string.this_week),
+                    stringResource(R.string.this_month),
+                    stringResource(R.string.paid),
+                    stringResource(R.string.canceled)
                 ),
                 viewModel = ticketsListViewModel
             )
@@ -89,7 +86,7 @@ fun TripsScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No Tickets Found",
+                        text = stringResource(R.string.no_tickets_found),
                         style = MaterialTheme.typography.h2,
                         color = Color.Black,
                         fontSize = dimensionResource(R.dimen.h1).value.sp
@@ -120,7 +117,7 @@ fun TripsList(list: List<Ticket>, navController: NavController) {
 @Composable
 fun TripCard(ticket: Ticket, navController: NavController) {
     val textColor = when (ticket.status) {
-        "paid" -> GrassGreen
+        stringResource(R.string.paid) -> GrassGreen
         else -> Color.Red
     }
     Card(

@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Devices
@@ -42,8 +43,6 @@ fun LoginScreen(
     navController: NavController,
     loginClientViewModel: LoginClientViewModel = hiltViewModel(),
 ) {
-    val context = LocalContext.current.applicationContext
-    val state = loginClientViewModel.state.value
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -75,7 +74,7 @@ fun LoginScreen(
                 }
             }
             Box(modifier = Modifier.fillMaxWidth()) {
-                SignInMethodsSection()
+                //SignInMethodsSection()
             }
             Box {
                 SignUpSection(navController)
@@ -136,14 +135,14 @@ fun InfoSection(navController: NavController, viewModel: LoginClientViewModel) {
 
             Column(modifier = Modifier.padding(horizontal = 35.dp, vertical = 20.dp)) {
                 Text(
-                    text = "Welcome back on trip",
+                    text = stringResource(id = R.string.welcome_back_on_trip),
                     style = MaterialTheme.typography.h1,
                     fontSize = dimensionResource(id = R.dimen.h1).value.sp,
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = "Welcome back on trip",
+                    text = stringResource(id = R.string.lets_start_your_journey),
                     style = MaterialTheme.typography.h2,
                     fontSize = dimensionResource(id = R.dimen.h2).value.sp,
                     color = Color.Black
@@ -157,7 +156,7 @@ fun InfoSection(navController: NavController, viewModel: LoginClientViewModel) {
                     },
                     label = {
                         Text(
-                            text = "Phone Number",
+                            text = stringResource(id = R.string.phone_number),
                             style = MaterialTheme.typography.body1,
                             fontSize = dimensionResource(R.dimen.body1).value.sp,
                         )
@@ -185,7 +184,7 @@ fun InfoSection(navController: NavController, viewModel: LoginClientViewModel) {
                 Spacer(modifier = Modifier.height(5.dp))
                 if (isPhoneError) {
                     Text(
-                        text = "Phone Number is empty",
+                        text = stringResource(id = R.string.phone_number_is_empty),
                         style = MaterialTheme.typography.body1,
                         color = Color.Red,
                         fontSize = dimensionResource(R.dimen.body1).value.sp
@@ -200,7 +199,7 @@ fun InfoSection(navController: NavController, viewModel: LoginClientViewModel) {
                     },
                     label = {
                         Text(
-                            text = "Password",
+                            text = stringResource(id = R.string.password),
                             style = MaterialTheme.typography.body1,
                             fontSize = dimensionResource(R.dimen.body1).value.sp,
                         )
@@ -229,7 +228,7 @@ fun InfoSection(navController: NavController, viewModel: LoginClientViewModel) {
                 Spacer(modifier = Modifier.height(5.dp))
                 if (isPasswordError) {
                     Text(
-                        text = "Password is empty",
+                        text = stringResource(id = R.string.password_is_empty),
                         style = MaterialTheme.typography.body1,
                         color = Color.Red,
                         fontSize = dimensionResource(R.dimen.body1).value.sp
@@ -237,7 +236,7 @@ fun InfoSection(navController: NavController, viewModel: LoginClientViewModel) {
                 }
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     Text(
-                        text = "Forgot Password?",
+                        text = stringResource(id = R.string.forgot_password),
                         style = MaterialTheme.typography.body1,
                         fontSize = dimensionResource(R.dimen.body1).value.sp,
                         color = Color.Black,
@@ -270,7 +269,7 @@ fun InfoSection(navController: NavController, viewModel: LoginClientViewModel) {
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Text(
-                    text = "sign in",
+                    text = stringResource(id = R.string.sign_in),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(id = R.dimen.body1).value.sp,
                     color = Color.White,
@@ -349,14 +348,14 @@ fun SignUpSection(navController: NavController) {
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "don't have an account?",
+            text = stringResource(id = R.string.dont_have_an_account),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Color.Black
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = "sign up",
+            text = stringResource(id = R.string.sign_up),
             style = MaterialTheme.typography.body1,
             fontSize = dimensionResource(R.dimen.body1).value.sp,
             color = Orange,
@@ -367,16 +366,3 @@ fun SignUpSection(navController: NavController) {
     }
 
 }
-
-/*
-@Preview(device = Devices.NEXUS_5)
-@Composable
-fun LoginPreview() {
-    MoussafirDimaTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            LoginScreen()
-        }
-    }
-}
-
- */

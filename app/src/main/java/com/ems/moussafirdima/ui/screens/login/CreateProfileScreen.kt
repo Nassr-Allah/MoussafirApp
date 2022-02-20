@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,7 +57,7 @@ fun CreateProfileScreen(navController: NavController) {
 @Composable
 fun CreateProfileHeader() {
     Text(
-        text = "Create your journey",
+        text = stringResource(R.string.create_your_journey),
         style = MaterialTheme.typography.h1,
         color = Color.Black,
         fontSize = dimensionResource(R.dimen.h1).value.sp
@@ -97,7 +98,7 @@ fun InputFormSection(navController: NavController) {
                 },
                 label = {
                     Text(
-                        text = "First Name",
+                        text = stringResource(id = R.string.first_name),
                         style = MaterialTheme.typography.body1,
                         fontSize = dimensionResource(R.dimen.body1).value.sp,
                     )
@@ -120,7 +121,7 @@ fun InputFormSection(navController: NavController) {
                 },
                 label = {
                     Text(
-                        text = "Last Name",
+                        text = stringResource(id = R.string.last_name),
                         style = MaterialTheme.typography.body1,
                         fontSize = dimensionResource(R.dimen.body1).value.sp,
                     )
@@ -144,7 +145,7 @@ fun InputFormSection(navController: NavController) {
             },
             label = {
                 Text(
-                    text = "Phone Number",
+                    text = stringResource(id = R.string.phone_number),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                 )
@@ -198,7 +199,7 @@ fun InputFormSection(navController: NavController) {
             },
             label = {
                 Text(
-                    text = "Location",
+                    text = stringResource(id = R.string.location),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(R.dimen.body1).value.sp,
                 )
@@ -243,16 +244,5 @@ fun InputFormSection(navController: NavController) {
     }
 }
 
-/*
-@Preview(device = Devices.NEXUS_5)
-@Composable
-fun CreateProfilePreview() {
-    MoussafirDimaTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            CreateProfileScreen()
-        }
-    }
-}
 
- */
 

@@ -4,6 +4,7 @@ import android.location.Location
 import com.ems.moussafirdima.domain.model.Station
 import com.ems.moussafirdima.util.calculateDistance
 import com.ems.moussafirdima.util.currentLocation
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 data class StationDto(
@@ -24,7 +25,7 @@ fun StationDto.toStation(): Station {
         latitude = lat!!.toDouble()
         longitude = lng!!.toDouble()
     }
-    val distance = calculateDistance(currentLocation!!, location)
+    val distance = calculateDistance(currentLocation, location)
     return Station(
         name,
         destinations,

@@ -1,12 +1,14 @@
 package com.ems.moussafirdima.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ems.moussafirdima.domain.model.Ticket
 import com.ems.moussafirdima.domain.model.User
 import com.ems.moussafirdima.ui.screens.main_app.MapScreen
+import com.ems.moussafirdima.ui.screens.main_app.profile.AboutUsScreen
 import com.ems.moussafirdima.ui.screens.main_app.profile.AccountScreen
 import com.ems.moussafirdima.ui.screens.main_app.profile.LanguageScreen
 import com.ems.moussafirdima.ui.screens.main_app.profile.SupportScreen
@@ -15,6 +17,7 @@ import com.ems.moussafirdima.ui.screens.main_app.trip.TripsScreen
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.android.libraries.maps.GoogleMap
 
+@ExperimentalComposeUiApi
 @ExperimentalPermissionsApi
 @Composable
 fun MapNavigation() {
@@ -31,6 +34,9 @@ fun MapNavigation() {
         }
         composable(route = MapScreens.LanguageScreen.route) {
             LanguageScreen(navController = navController)
+        }
+        composable(route = MapScreens.AboutUsScreen.route) {
+            AboutUsScreen()
         }
         composable(route = MapScreens.TripsScreen.route + "/{token}") {
             TripsScreen(navController = navController)

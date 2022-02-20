@@ -23,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,7 +62,7 @@ fun ProfilePictureScreen(
                 verticalArrangement = Arrangement.SpaceAround
             ) {
                 Text(
-                    text = "Choose a profile picture",
+                    text = stringResource(id = R.string.choose_a_profile_picture),
                     style = MaterialTheme.typography.h1,
                     color = Color.Black,
                     fontSize = dimensionResource(R.dimen.h2).value.sp
@@ -82,7 +83,7 @@ fun ProfilePictureScreen(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
             ) {
                 Text(
-                    text = "next",
+                    text = stringResource(id = R.string.next),
                     style = MaterialTheme.typography.body1,
                     fontSize = dimensionResource(id = R.dimen.body1).value.sp,
                     color = Color.White
