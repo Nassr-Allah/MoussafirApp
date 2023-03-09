@@ -35,3 +35,7 @@ The app includes the following features:
 - Google Maps API: A service that provides access to Google's mapping technology and allows developers to embed maps into their applications.
 
 - Firebase Phone Auth: a service that provides phone authentication and SMS codes.
+
+- Coroutines: A library for writing asynchronous code that is more concise and easier to read than traditional callbacks or threads.
+
+- Flows: A reactive stream library that allows developers to write asynchronous, non-blocking code that can react to changes in data.
